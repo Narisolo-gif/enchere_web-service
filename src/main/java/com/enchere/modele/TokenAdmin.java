@@ -13,8 +13,8 @@ import java.sql.Timestamp;
 @Entity(name = "tokenadmin")
 public class TokenAdmin {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_token_admin")
-    @SequenceGenerator(name = "s_token_admin", sequenceName = "s_token_admin",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tokenadmin_id_seq")
+    @SequenceGenerator(name = "tokenadmin_id_seq", sequenceName = "tokenadmin_id_seq",allocationSize = 1)
     private Long id;
     private String valeur;
     @ManyToOne

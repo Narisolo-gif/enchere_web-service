@@ -55,7 +55,7 @@ public class TokenController {
         this.service.delete(tokenid);
     }
     @DeleteMapping("/tokens")
-    private void deleteToken(@PathVariable("tokenid") Long tokenid)
+    private void deleteAllToken()
     {
         this.service.deleteAll();
     }

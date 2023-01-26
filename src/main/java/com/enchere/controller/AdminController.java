@@ -22,7 +22,7 @@ public class AdminController {
     public TokenAdmin logAdmin(@RequestBody Login l){
         return this.service.login(l.getEmail(), l.getMdp());
     }
-    
+
 
     /*@PostMapping("/admins/login")
     public TokenAdmin logAdmin(@RequestParam("email") String email, @RequestParam("mdp") String mdp){

@@ -43,5 +43,8 @@ public class TokenService {
     public void delete(long id) {
         this.repository.deleteById(id);
     }
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 
 }

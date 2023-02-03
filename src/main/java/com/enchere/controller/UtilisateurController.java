@@ -73,15 +73,26 @@ public class UtilisateurController {
     @PostMapping("/encherir/{idutilisateur}/{idenchere}/{somme}")
     public void encherir(@PathVariable("idutilisateur")Long idutilisateur, @PathVariable("idenchere")Long idenchere,@PathVariable("somme")double somme)throws Exception{
         Enchere enchere=es.getEnchereById(idenchere);
-        if(enchere.getStatut()==0 && this.service.somme(idutilisateur)-this.service.sommeBloque(idutilisateur)>somme && somme>this.hs.lastHistorique(idenchere).getPrix()&&idutilisateur!=this.hs.lastHistorique(idenchere).getUtilisateur().getId()){
+        if(enchere.getStatut()==0 && this.service.somme(idutilisateur)-this.service.sommeBloque(idutilisateur)>somme ){
+            // somme>this.hs.lastHistorique(idenchere).getPrix()&&idutilisateur!=this.hs.lastHistorique(idenchere).getUtilisateur().getId()
             Historique_enchere historique=new Historique_enchere();
             historique.setEnchere(enchere);
             historique.setPrix(somme);
             historique.setDate(new Timestamp(System.currentTimeMillis()));
             historique.setUtilisateur(utilisateur_service.getUtilisateurById(idutilisateur));
-            hs.saveOrUpdate(historique);
+            
+            if(this.hs.lastHistorique(idenchere)==null ){
+                
+                hs.saveOrUpdate(historique);
 
-            this.blocage_compteService.deleteBlocage(idenchere,idutilisateur);
+                this.blocage_compteService.deleteBlocage(idenchere,idutilisateur);
+            }else {
+                if(somme>this.hs.lastHistorique(idenchere).getPrix()&&idutilisateur!=this.hs.lastHistorique(idenchere).getUtilisateur().getId()){
+                    hs.saveOrUpdate(historique);
+
+                    this.blocage_compteService.deleteBlocage(idenchere,idutilisateur);
+                }
+            }
 
         }else{
             throw new Exception("Operation invalide");

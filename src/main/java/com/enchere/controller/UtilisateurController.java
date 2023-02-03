@@ -112,4 +112,8 @@ public class UtilisateurController {
     public Token logUtilisateur(@RequestBody Login l) {
         return this.service.login(l.getEmail(), l.getMdp());
     }
+    @GetMapping("/encheres/{idenchere}/lasthistorique")
+    public Historique_enchere lastHitorique(@PathVariable("idenchere")Long idenchere){
+        return this.hs.lastHistorique(idenchere);
+    }
 }
